@@ -59,7 +59,7 @@ const posts = [
 const container = document.getElementById("container");
 //funzione che crea il post tramite un ciclo
 
-function creaPost(container) {
+function creaPost(container , i) {
 
 
     const post = document.createElement("div");
@@ -100,12 +100,11 @@ function creaPost(container) {
     post.append(postImg);
     post.append(postFooter);
 
-    postMetaIcon.innerHTML = `<img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">`
-    postMetaAuthor.innerHTML = "Phil Mangione";
+    postMetaIcon.innerHTML = `<img class="profile-pic" src="${posts[i].author.image}" alt="Phil Mangione">`
+    postMetaAuthor.innerHTML = `${posts[i].author.name}`;
     postMetaTime.innerHTML = "4 mesi fa";
-    postText.innerHTML = `Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima
-    iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.`
-    postImg.innerHTML = `<img src="https://unsplash.it/600/300?image=171" alt=""></img>`;
+    postText.innerHTML = `${posts[i].content}`
+    postImg.innerHTML = `<img src="${posts[i].media}" alt=""></img>`;
 
 
 }
@@ -114,7 +113,7 @@ function postElement() {
 
 }
 
-for (let i = 0; i < 5; i++) {
-    creaPost(container);
+for (let i = 0; i < posts.length; i++) {
+    creaPost(container , i);
 }
 
