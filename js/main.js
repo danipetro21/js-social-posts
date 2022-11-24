@@ -38,7 +38,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": "https://unsplash.it/300/300?image=20"
+            "image": null
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -124,7 +124,13 @@ function creaPost(container, i) {
         });
 
     jsLikes.append(likeCounter);
-    postMetaIcon.innerHTML = `<img class="profile-pic" src="${posts[i].author.image}" alt="Phil Mangione">`
+    if (posts[i].author.image == null) {
+        postMetaIcon.innerHTML = `${initialName(posts[i].author.name)}`
+    } else {
+        postMetaIcon.innerHTML = `<img class="profile-pic" src="${posts[i].author.image}" alt="Phil Mangione">`
+    }
+
+
     postMetaAuthor.innerHTML = `${posts[i].author.name}`;
 
     postMetaTime.innerHTML = `${monthDiff(new Date(posts[i].created), new Date(today))} mesi fa`;
@@ -139,6 +145,15 @@ function creaPost(container, i) {
     likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone`
 
 
+}
+
+function initialName(string) {
+    var names = string.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+    if (names.length > 1) {
+        initials += names[names.length - 1].substring(0, 1).toUpperCase();
+    }
+    return initials;
 }
 
 function likeAPost(i) {
