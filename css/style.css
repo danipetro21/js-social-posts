@@ -124,3 +124,8 @@ h1 {
     color: #0CD977;
     cursor: default;
 }
+
+.clicked {
+    background-color: rgba(228, 185, 185, 0.864);
+    border-radius: 8px;
+}

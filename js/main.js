@@ -38,7 +38,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": null
+            "image": "https://unsplash.it/300/300?image=20"
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -57,10 +57,19 @@ const posts = [
 ];
 
 const container = document.getElementById("container");
+
+//pulsante like
+const likeBtn = document.getElementsByClassName("like-button");
+let likeId = [];
+
+//date now method
+let today = new Date().toISOString().slice(0, 10);
+console.log(today);
+console.log(posts[1].created);
+
 //funzione che crea il post tramite un ciclo
-
-function creaPost(container , i) {
-
+function creaPost(container, i) {
+    // let uploadDate = Math.round(Date.now() / year);
 
     const post = document.createElement("div");
     const postHeader = document.createElement("div");
@@ -74,9 +83,9 @@ function creaPost(container , i) {
     const postFooter = document.createElement("div");
 
     //variabili per i like
-    // const jsLikes = document.createElement("div");
-    // const likeCta = document.createElement("div");
-    // const likeCounter = document.createElement("div");
+    const jsLikes = document.createElement("div");
+    const likeCta = document.createElement("div");
+    const likeCounter = document.createElement("div");
 
     post.classList.add("post");
     postHeader.classList.add("post__header");
@@ -88,6 +97,10 @@ function creaPost(container , i) {
     postText.classList.add("post__text");
     postImg.classList.add("post__image");
     postFooter.classList.add("post__footer");
+    jsLikes.classList.add("likes", "js-likes");
+    likeCta.classList.add("likes__cta");
+    likeCounter.classList.add("likes__counter");
+
 
     container.append(post);
     post.append(postHeader);
@@ -99,21 +112,49 @@ function creaPost(container , i) {
     post.append(postText);
     post.append(postImg);
     post.append(postFooter);
+    postFooter.append(jsLikes);
+    jsLikes.append(likeCta);
 
+    likeCta.addEventListener("click",
+        function () {
+            likeCta.classList.add("clicked");
+            likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likeAPost(i)}</b> persone`
+            likeId[i] = posts[i].id;
+            console.log(likeId[i]);
+        });
+
+    jsLikes.append(likeCounter);
     postMetaIcon.innerHTML = `<img class="profile-pic" src="${posts[i].author.image}" alt="Phil Mangione">`
     postMetaAuthor.innerHTML = `${posts[i].author.name}`;
-    postMetaTime.innerHTML = "4 mesi fa";
+
+    postMetaTime.innerHTML = `${monthDiff(new Date(posts[i].created), new Date(today))} mesi fa`;
+
     postText.innerHTML = `${posts[i].content}`
     postImg.innerHTML = `<img src="${posts[i].media}" alt=""></img>`;
+    likeCta.innerHTML = `<a class="like-button  js-like-button" data-postid="1">   
+    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+    <span class="like-button__label">Mi Piace</span>
+    </a>`;
+    // counter likes di default
+    likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone`
 
 
 }
 
-function postElement() {
+function likeAPost(i) {
+    like = posts[i].likes;
+    like++;
+    return like;
+}
 
+function monthDiff(startDate, endDate) {
+    const diff = Math.max(0, (endDate.getFullYear() - startDate.getFullYear()) * 12 - startDate.getMonth() + endDate.getMonth());
+    return diff
 }
 
 for (let i = 0; i < posts.length; i++) {
-    creaPost(container , i);
+    creaPost(container, i);
+
 }
+
 
