@@ -124,7 +124,7 @@ function creaPost(container, i) {
                 likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likeAPost(i)}</b> persone`
                 likeId.push(posts[i].id);
             }else{
-                likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone`
+                likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likeAPost(i)-1}</b> persone`
                 likeId.shift(posts[i].id);
             }
             
