@@ -68,8 +68,8 @@ console.log(today);
 console.log(posts[1].created);
 
 //funzione che crea il post tramite un ciclo
+
 function creaPost(container, i) {
-    // let uploadDate = Math.round(Date.now() / year);
 
     const post = document.createElement("div");
     const postHeader = document.createElement("div");
@@ -117,13 +117,21 @@ function creaPost(container, i) {
 
     likeCta.addEventListener("click",
         function () {
-            likeCta.classList.add("clicked");
-            likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likeAPost(i)}</b> persone`
-            likeId[i] = posts[i].id;
-            console.log(likeId[i]);
+            
+            likeCta.classList.toggle("clicked");
+
+            if (likeCta.classList.contains("clicked")){
+                likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likeAPost(i)}</b> persone`
+                likeId.push(posts[i].id);
+            }else{
+                likeCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone`
+                likeId.shift(posts[i].id);
+            }
+            
         });
 
     jsLikes.append(likeCounter);
+
     if (posts[i].author.image == null) {
         postMetaIcon.innerHTML = `${initialName(posts[i].author.name)}`
     } else {
@@ -135,7 +143,8 @@ function creaPost(container, i) {
 
     postMetaTime.innerHTML = `${monthDiff(new Date(posts[i].created), new Date(today))} mesi fa`;
 
-    postText.innerHTML = `${posts[i].content}`
+    postText.innerHTML = `${posts[i].content}`;
+
     postImg.innerHTML = `<img src="${posts[i].media}" alt=""></img>`;
     likeCta.innerHTML = `<a class="like-button  js-like-button" data-postid="1">   
     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
@@ -161,6 +170,7 @@ function likeAPost(i) {
     like++;
     return like;
 }
+
 
 function monthDiff(startDate, endDate) {
     const diff = Math.max(0, (endDate.getFullYear() - startDate.getFullYear()) * 12 - startDate.getMonth() + endDate.getMonth());
